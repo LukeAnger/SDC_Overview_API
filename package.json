@@ -1,0 +1,20 @@
+{
+  "name": "sdc_project_atelier_overview_api",
+  "version": "1.0.0",
+  "description": "SDC products API",
+  "main": "3131",
+  "scripts": {
+    "test": "test",
+    "start": "node server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LukeAnger/SDC_project_atelier_Overview_API.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LukeAnger/SDC_project_atelier_Overview_API/issues"
+  },
+  "homepage": "https://github.com/LukeAnger/SDC_project_atelier_Overview_API#readme"
+}
