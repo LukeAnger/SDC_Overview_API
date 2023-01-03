@@ -1,0 +1,19 @@
+Initial testing of the Styles endpoint
+
+Using artillery tests for stress testing
+
+Dec 28 2023
+-----------
+Scenario 1
+  5 rps 60s
+  ramp to 50 rps 60s
+  sustained 50 rps 600s
+
+  low 1 ms, high 24 ms, median 6 ms, p95 11 ms, p99 12 ms
+
+Scenario 2
+10 rps 60s
+ramp to 100 rps 60s
+sustained 100 rps 600s
+
+low 1 ms, high 55 ms, median 11 ms, p95 19 ms, p99 32 ms
