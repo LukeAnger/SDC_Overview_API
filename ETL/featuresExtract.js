@@ -4,7 +4,8 @@ const fs = require('fs')
 const fastcsv = require('fast-csv')
 const path = require('path');
 mongoose.set('strictQuery', false);
-mongoose.connect('mongodb://localhost:27017/sdc_products').catch(err => console.log(err));
+mongoose.connect('mongodb://localhost:27017/sdc').catch(err => console.log(err));
+let url = 'mongodb://localhost:27017/';
 // console.log(db)
 const productSchema = new mongoose.Schema(
   {
@@ -18,18 +19,13 @@ const productSchema = new mongoose.Schema(
     features: Array
   }
 );// id,name,slogan,description,category,default_price
-
-
-
-
 const Product = new mongoose.model('Product', productSchema);
-// Product.find({}).then(res => {console.log('TEST: ', res)}).catch(err => console.log(err));
-// Product.findOneAndUpdate({id: '20'}, {features: [{feature: 'apple', value: 'banana'}]}, {new: true})
-//       .then(res => console.log('TEST', res))
+
+
 const testPath = path.join(__dirname, '../data/features.csv');
 let count = 0;
-let url = 'mongodb://localhost:27017/';
 let stream = fs.createReadStream(testPath)
+
 let features_obj = {}
 let csvStream = fastcsv
   .parse()

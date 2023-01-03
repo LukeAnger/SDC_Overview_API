@@ -6,35 +6,33 @@ const path = require('path');
 
 
 
-const testPath = path.join(__dirname, '../data/product.csv');
+const testPath = path.join(__dirname, '../data/related.csv');
 let count = 0;
 let lot = 0;
 let url = 'mongodb://localhost:27017/';
 let stream = fs.createReadStream(testPath)
-let csvData = []
+let csvData = {}
 let csvStream = fastcsv
   .parse()
-  .on('data', function (data) { // id,name,slogan,description,category,default_price
+  .on('data', function (data) { // id,current_product_id,related_product_id
 
     if (count%10000 === 0) {
-      lot++
       console.log('ON LINE: ', count)
     }
-    csvData.push({
-      lot: lot,
-      _id: Number(data[0]),
-      name: data[1],
-      slogan: data[2],
-      description: data[3],
-      category: data[4],
-      default_price: data[5],
-      features: []
-    })
+    if (csvData[data[1]] === undefined) {
+      csvData[data[1]] = [];
+      csvData[data[1]].push(data[2])
+    } else {
+      csvData[data[1]].push(data[2])
+    }
+
     count++;
   })
   .on('end', function() {
-    csvData.shift();
-
+    let arr = []
+    for (let key in csvData) {
+      arr.push({ _id:Number(key), related: csvData[key] })
+    }
     mongodb.connect(
       url,
       { useNewUrlParser: true, useUnifiedTopology: true },
@@ -42,8 +40,8 @@ let csvStream = fastcsv
         if (err) throw err;
         client
           .db("sdc")
-          .collection("products")
-          .insertMany(csvData, (err, res) => {
+          .collection("related")
+          .insertMany(arr, (err, res) => {
             if (err) throw err;
             // console.log('INSERT MANY: ', csvData);
             client.close();

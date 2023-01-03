@@ -1,0 +1,22 @@
+config:
+  target: 'http://localhost:3000'
+  variables:
+    id:
+    - '333325'
+  phases:
+    - duration: 60
+      arrivalRate: 10
+      name: Warm up
+    - duration: 120
+      arrivalRate: 10
+      rampTo: 200
+      name: Ramp up load
+    - duration: 300
+      arrivalRate: 50
+      name: Sustained load
+
+scenarios:
+  - name: 'Styles endpoint test'
+    flow:
+      - get:
+          url: '/products/{{ id }}/styles'
