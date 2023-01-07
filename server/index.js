@@ -14,30 +14,33 @@ app.get('/', (req, res) => {
 })
 
 app.get('/products/', (req, res) => {
-  console.log('PRODUCTS PAGE HEARD')
-  find().limit(req.params.count).then(response => {
+  let count = req.params.count;
+  let page = req.params.page;
+
+  find().limit(req.params.count)
+    .then(response => {
     console.log(response)
   })
 })
 
 app.get('/products/:product_id', (req, res) => {
-  console.log('PRODUCT PAGE HEARD')
   console.log(req.params)
-  db.Product.find({_id: req.params.product_id}).then(response => {
+  db.Product.find({_id: req.params.product_id})
+    .then(response => {
     res.send(response)
   })
 })
 
 app.get('/products/:product_id/styles', (req, res) => {
-  // console.log('STYLES PAGE HEARD')
-  db.Style.find({_id: req.params.product_id}).then(response => {
+  db.Style.find({_id: req.params.product_id})
+    .then(response => {
     res.send(response)
   })
 })
 
 app.get('/products/:product_id/related', (req, res) => {
-  console.log('RELATED PAGE HEARD')
-  db.Related.find({_id: req.params.product_id}).then(response => {
+  db.Related.find({_id: req.params.product_id})
+    .then(response => {
     res.send(response)
   })
 })
